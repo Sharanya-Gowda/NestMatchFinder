@@ -9,6 +9,6 @@ export function useAuth() {
   };
 }
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+export function AuthProvider({ children }: { children: any }) {
+  return children;
 }
