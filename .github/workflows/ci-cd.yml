@@ -94,7 +94,7 @@ jobs:
         out: 'dependency-check-report'
     
     - name: Upload OWASP report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v2
       with:
         name: dependency-check-report
         path: dependency-check-report
