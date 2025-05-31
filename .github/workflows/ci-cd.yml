@@ -94,7 +94,7 @@ jobs:
         out: 'dependency-check-report'
     
     - name: Upload OWASP report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: dependency-check-report
         path: dependency-check-report
@@ -120,13 +120,13 @@ jobs:
     
     - name: Build Docker image
       run: docker build -t nestmatch:latest .
-
+    
     - name: Tag Docker image
       run: docker tag nestmatch:latest sharanyams/nestmatch:latest
-
+    
     - name: Login to DockerHub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
+    
     - name: Push Docker image
       run: docker push sharanyams/nestmatch:latest
 
@@ -142,7 +142,6 @@ jobs:
       run: |
         echo "Deploying to staging environment..."
         # Add your deployment commands here
-        # Example: kubectl apply -f k8s/staging/
     
     - name: Run integration tests
       run: |
@@ -154,4 +153,3 @@ jobs:
       run: |
         echo "Deploying to production environment..."
         # Add production deployment commands here
-        # Example: kubectl apply -f k8s/production/
