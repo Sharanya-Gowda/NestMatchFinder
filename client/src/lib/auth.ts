@@ -1,9 +1,9 @@
 // Simple auth hook for now
 export function useAuth() {
   return {
-    user: null,
-    login: async () => {},
-    signup: async () => {},
+    user: null as any,
+    login: async (data?: any) => {},
+    signup: async (data?: any) => {},
     logout: () => {},
     loading: false,
   };

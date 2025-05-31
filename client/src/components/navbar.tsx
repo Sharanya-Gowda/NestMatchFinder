@@ -5,7 +5,7 @@ import Logo from "@/components/logo";
 
 export default function Navbar() {
   const [location] = useLocation();
-  const user = null;
+  const user = null as any;
   const logout = () => {};
 
   const isActive = (path: string) => location === path;
