@@ -120,11 +120,13 @@ export const userPreferences = pgTable("user_preferences", {
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
 });
 
 export const insertPropertySchema = createInsertSchema(properties).omit({
   id: true,
   createdAt: true,
+  updatedAt: true,
   rating: true,
   reviewCount: true,
 }).extend({

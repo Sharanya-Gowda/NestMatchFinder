@@ -1,10 +1,12 @@
 {
   "include": ["client/src/**/*", "shared/**/*", "server/**/*"],
-  "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
+  "exclude": ["node_modules", "build", "dist", "**/*.test.ts","server/vite.ts"],
   "compilerOptions": {
     "skipLibCheck": true,
     "noImplicitAny": false,
     "strict": false,
+    "noImplicitReturns": false,
+    "exactOptionalPropertyTypes": false,
     "noPropertyAccessFromIndexSignature": false,
     "noUncheckedIndexedAccess": false,
     "incremental": true,

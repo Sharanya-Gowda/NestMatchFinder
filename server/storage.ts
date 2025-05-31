@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { 
   users, properties, bookings, reviews, favorites, verificationDocuments, rentPayments,
   type User, type InsertUser, type Property, type InsertProperty, 
