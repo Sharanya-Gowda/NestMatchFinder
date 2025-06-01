@@ -7,128 +7,120 @@ export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
+  firstName: text("firstName").notNull(),
+  lastName: text("lastName").notNull(),
   name: text("name"), // Full name for display
   phone: text("phone").notNull(),
   age: integer("age"),
   gender: text("gender"), // 'male', 'female', 'other'
   occupation: text("occupation"),
-  userType: text("user_type").notNull(), // 'user' or 'owner'
-  isVerified: boolean("is_verified").default(false),
+  userType: text("userType").notNull(), // 'user' or 'owner'
+  isVerified: boolean("isVerified").default(false),
   preferences: jsonb("preferences"), // lifestyle preferences for compatibility
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const properties = pgTable("properties", {
   id: serial("id").primaryKey(),
-  ownerId: integer("owner_id").notNull(),
+  ownerId: integer("ownerId").notNull(),
   name: text("name").notNull(),
   description: text("description"),
   address: text("address").notNull(),
   city: text("city").notNull(),
   state: text("state").notNull(),
   pincode: text("pincode").notNull(),
-  latitude: decimal("latitude", { precision: 10, scale: 8 }),
-  longitude: decimal("longitude", { precision: 11, scale: 8 }),
+  latitude: text("latitude"),
+  longitude: text("longitude"),
   rent: integer("rent").notNull(),
-  totalBeds: integer("total_beds").notNull(),
-  availableBeds: integer("available_beds").notNull(),
+  totalBeds: integer("totalBeds").notNull(),
+  availableBeds: integer("availableBeds").notNull(),
   gender: text("gender").notNull(), // 'male', 'female', 'any'
   amenities: jsonb("amenities").notNull(),
   images: jsonb("images"),
-  ownerDocuments: jsonb("owner_documents"), // Aadhar, license, etc.
-  totalRooms: integer("total_rooms").notNull(),
-  securityDeposit: integer("security_deposit"),
-  isActive: boolean("is_active").default(true),
-  isVerified: boolean("is_verified").default(false),
-  rating: decimal("rating", { precision: 3, scale: 2 }).default("0"),
-  reviewCount: integer("review_count").default(0),
-  createdAt: timestamp("created_at").defaultNow(),
+  isVerified: boolean("isVerified").default(false),
+  averageRating: decimal("averageRating").default("0"),
+  reviewCount: integer("reviewCount").default(0),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const bookings = pgTable("bookings", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  propertyId: integer("property_id").notNull(),
+  userId: integer("userId").notNull(),
+  propertyId: integer("propertyId").notNull(),
   status: text("status").notNull(), // 'pending', 'approved', 'rejected', 'active', 'completed'
-  compatibilityScore: integer("compatibility_score"),
-  requestedDate: timestamp("requested_date"),
-  approvedDate: timestamp("approved_date"),
-  moveInDate: timestamp("move_in_date"),
-  moveOutDate: timestamp("move_out_date"),
+  compatibilityScore: decimal("compatibilityScore"),
+  requestedDate: timestamp("requestedDate"),
+  approvedDate: timestamp("approvedDate"),
+  moveInDate: timestamp("moveInDate"),
+  moveOutDate: timestamp("moveOutDate"),
   rent: integer("rent").notNull(),
-  securityDeposit: integer("security_deposit"),
-  createdAt: timestamp("created_at").defaultNow(),
+  securityDeposit: integer("securityDeposit"),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const reviews = pgTable("reviews", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  propertyId: integer("property_id").notNull(),
+  userId: integer("userId").notNull(),
+  propertyId: integer("propertyId").notNull(),
   rating: integer("rating").notNull(),
   comment: text("comment"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const favorites = pgTable("favorites", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  propertyId: integer("property_id").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+  userId: integer("userId").notNull(),
+  propertyId: integer("propertyId").notNull(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const verificationDocuments = pgTable("verification_documents", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull(),
-  documentType: text("document_type").notNull(), // 'aadhar', 'pg_license'
-  fileName: text("file_name").notNull(),
-  filePath: text("file_path").notNull(),
+  userId: integer("userId").notNull(),
+  documentType: text("documentType").notNull(), // 'aadhar', 'pg_license'
+  documentUrl: text("documentUrl").notNull(),
   status: text("status").default('pending'), // 'pending', 'approved', 'rejected'
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const rentPayments = pgTable("rent_payments", {
   id: serial("id").primaryKey(),
-  bookingId: integer("booking_id").notNull(),
-  userId: integer("user_id").notNull(),
-  propertyId: integer("property_id").notNull(),
+  bookingId: integer("bookingId").notNull(),
+  userId: integer("userId").notNull(),
+  propertyId: integer("propertyId").notNull(),
   amount: integer("amount").notNull(),
-  paymentMonth: text("payment_month").notNull(), // Format: "2024-01"
-  paymentDate: timestamp("payment_date").notNull(),
+  paymentMonth: text("paymentMonth").notNull(), // Format: "2024-01"
+  paymentDate: timestamp("paymentDate").notNull(),
   status: text("status").notNull(), // 'paid', 'pending', 'overdue'
-  paymentMethod: text("payment_method").default("manual"), // 'manual', 'online', 'cash'
+  paymentMethod: text("paymentMethod").default("manual"), // 'manual', 'online', 'cash'
   notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 export const userPreferences = pgTable("user_preferences", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().unique(),
-  foodType: text("food_type").notNull(),
-  sleepSchedule: text("sleep_schedule").notNull(),
-  studyHabits: text("study_habits").notNull(),
+  userId: integer("userId").notNull().unique(),
+  foodType: text("foodType").notNull(),
+  sleepSchedule: text("sleepSchedule").notNull(),
+  studyHabits: text("studyHabits").notNull(),
   cleanliness: text("cleanliness").notNull(),
-  socialLevel: text("social_level").notNull(),
+  socialLevel: text("socialLevel").notNull(),
   smoking: text("smoking").notNull(),
   drinking: text("drinking").notNull(),
   pets: text("pets").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
-  updatedAt: timestamp("updated_at").defaultNow(),
+  createdAt: timestamp("createdAt").defaultNow(),
 });
 
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
   createdAt: true,
-  updatedAt: true,
 });
 
 export const insertPropertySchema = createInsertSchema(properties).omit({
   id: true,
   createdAt: true,
-  updatedAt: true,
-  rating: true,
+  averageRating: true,
   reviewCount: true,
 }).extend({
   latitude: z.string().optional(),
@@ -169,7 +161,6 @@ export const insertRentPaymentSchema = createInsertSchema(rentPayments).omit({
 export const insertUserPreferencesSchema = createInsertSchema(userPreferences).omit({
   id: true,
   createdAt: true,
-  updatedAt: true,
 });
 
 // Types

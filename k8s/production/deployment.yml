@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: nestmatch
-        image: your-registry/nestmatch:latest
+        image: sharanyams/nestmatch:latest
         ports:
         - containerPort: 5000
         env:
@@ -30,12 +30,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: nestmatch-secrets
-              key: database-url
+              key: DATABASE_URL
         - name: SESSION_SECRET
           valueFrom:
             secretKeyRef:
               name: nestmatch-secrets
-              key: session-secret
+              key: SESSION_SECRET
         resources:
           requests:
             memory: "256Mi"

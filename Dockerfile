@@ -1,5 +1,5 @@
 # Multi-stage build for production optimization
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 
 # Install dependencies only when needed
 FROM base AS deps
@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci && npm cache clean --force
 
 # Build stage
 FROM base AS builder
@@ -23,19 +23,18 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy built application
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./
+# Copy built application and source files for development
+COPY --from=builder /app ./
 COPY --from=deps /app/node_modules ./node_modules
 
-# Create non-root user
-USER nextjs
+# Create non-root user and fix permissions
+RUN chown -R nextjs:nodejs /app
 
 EXPOSE 5000
 ENV PORT=5000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

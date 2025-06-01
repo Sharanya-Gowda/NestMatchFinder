@@ -6,29 +6,29 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=postgresql://postgres:password@db:5432/nestmatch?sslmode=disable
+      - NODE_ENV=development
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGPASSWORD=password
+      - PGDATABASE=nestmatch
     depends_on:
-      - postgres
-    restart: unless-stopped
-
-  postgres:
-    image: postgres:13
-    environment:
-      POSTGRES_DB: nestmatch
-      POSTGRES_USER: nestmatch_user
-      POSTGRES_PASSWORD: nestmatch_password
+      - db
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - .:/app
+      - /app/node_modules
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=nestmatch
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
     ports:
       - "5432:5432"
-    restart: unless-stopped
-
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
