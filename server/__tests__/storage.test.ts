@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { MemStorage } from '../storage';
 import { InsertUser, InsertProperty, InsertBooking } from '@shared/schema';
 

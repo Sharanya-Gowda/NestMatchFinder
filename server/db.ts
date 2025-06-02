@@ -23,6 +23,12 @@ export const db = drizzle(pool, { schema });
 // Auto-initialize database on startup
 export async function initializeDatabase() {
   try {
+     // Create SonarQube database if it doesn't exist
+    await pool.query(`CREATE DATABASE sonarqube`).catch(() => {
+      // Database might already exist, ignore error
+    });
+    
+
     // Create all tables using raw SQL to ensure they exist
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
