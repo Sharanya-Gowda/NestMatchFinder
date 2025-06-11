@@ -1,4 +1,4 @@
-# NestMatch - PG Finder Platform
+# NestMatch - A PG Finder Platform
 
 A comprehensive PG (Paying Guest) finder platform built with React, Node.js, and PostgreSQL. Features property listings, booking management, roommate compatibility matching, and integrated payment tracking.
 
